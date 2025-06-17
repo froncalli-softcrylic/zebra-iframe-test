@@ -1,0 +1,8 @@
+# Ignore all files in the Salon Lofts directory
+Salon Lofts/*
+# Ignore all files in the Samsung directory
+Samsung/*
+# Ignore all files in the Golden State Warriors directory
+Golden State Warriors/*
+
+index.html
