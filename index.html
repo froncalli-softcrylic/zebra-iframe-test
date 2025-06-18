@@ -86,7 +86,7 @@
           console.log("Mobile Device Detected: Using screen.width");
 
           // Set the iframe's src attribute to the updated URL
-          iframe.src = baseURL;
+          iframe.src = `${baseURL}?vpw=768`;
         } else {
           console.log("Desktop Device Detected: Using window.innerWidth");
           // Use window.innerWidth for desktops
