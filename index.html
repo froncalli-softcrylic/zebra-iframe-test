@@ -64,23 +64,37 @@
       id="dynamicIframe"
       src=""
       frameborder="0"
-      width="100%"
-      height="500"
       style="width: 100%; min-height: 100vh; height: 100%; margin: 0 auto; padding: 0; border: none"
     ></iframe>
+
     <script>
       // Function to detect mobile devices
       function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       }
 
+      // Function to detect if the browser is in incognito mode
+      async function isIncognitoMode() {
+        const quota = await navigator.storage.estimate();
+        console.log("Quota estimate:", quota);
+        return quota.quota < 1120000000; // Incognito mode typically has a smaller quota
+      }
+
       // Function to dynamically update the iframe or redirect for mobile
-      function updateContent() {
+      async function updateContent() {
         const iframe = document.getElementById("dynamicIframe");
         const spinner = document.getElementById("spinner");
         const header = document.getElementById("header-loader");
         const loaderContainer = document.getElementById("loader-container");
         const baseURL = "https://www.paylease.com/registration/pay_portal/124506738/STD";
+
+        // Check if the browser is in incognito mode
+        const incognito = await isIncognitoMode();
+        if (incognito) {
+          // Redirect to the specified URL if in incognito mode
+          window.location.href = baseURL;
+          return;
+        }
 
         if (isMobileDevice()) {
           // Redirect mobile users to the specified URL
@@ -94,8 +108,9 @@
           } else if (viewportWidth < 768) {
             viewportWidth = window.innerWidth;
           }
-
+          console.log("Desktop Detected. Viewport Width:", viewportWidth);
           const urlWithVPW = `${baseURL}?vpw=${viewportWidth}&crd=1`; // Append vpw to the URL
+          console.log(urlWithVPW);
 
           // Set the iframe's src attribute to the updated URL
           iframe.src = urlWithVPW;
