@@ -77,7 +77,7 @@
       async function isIncognitoMode() {
         const quota = await navigator.storage.estimate();
         console.log("Quota estimate:", quota);
-        return quota.quota < 1120000000; // Incognito mode typically has a smaller quota
+        return quota.quota < 5120000000; // Incognito mode typically has a smaller quota
       }
 
       // Function to dynamically update the iframe or redirect for mobile
