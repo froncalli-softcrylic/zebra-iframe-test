@@ -70,17 +70,17 @@
         const loaderContainer = document.getElementById("loader-container");
         const baseURL = "https://www.paylease.com/registration/pay_portal/124506738/STD";
         // Detect screen width for mobile and innerWidth for desktop
-        let viewportWidth = 768;
+        let viewportWidth;
 
-        // if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        //   // Use screen.width for mobile devices
-        //   viewportWidth = 768;
-        //   console.log("Mobile Device Detected: Using screen.width");
-        // } else {
-        //   console.log("Desktop Device Detected: Using window.innerWidth");
-        //   // Use window.innerWidth for desktops
-        //   viewportWidth = window.innerWidth;
-        // }
+        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          // Use screen.width for mobile devices
+          viewportWidth = 768;
+          console.log("Mobile Device Detected: Using screen.width");
+        } else {
+          console.log("Desktop Device Detected: Using window.innerWidth");
+          // Use window.innerWidth for desktops
+          viewportWidth = window.innerWidth;
+        }
 
         if (viewportWidth < 1140 && viewportWidth > 768) {
           viewportWidth = 768;
