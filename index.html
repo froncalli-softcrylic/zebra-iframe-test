@@ -46,15 +46,7 @@
   <body>
     <div
       id="loader-container"
-      style="
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      "
-    >
+      style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh">
       <h1 id="header-loader">Hang tight — we’re getting the payment portal ready for you.</h1>
       <!-- Spinner -->
       <div id="spinner"></div>
@@ -66,8 +58,7 @@
       frameborder="0"
       width="100%"
       height="500"
-      style="width: 100%; min-height: 100vh; height: 100%; margin: 0 auto; padding: 0; border: none"
-    ></iframe>
+      style="width: 100%; min-height: 100vh; height: 100%; margin: 0 auto; padding: 0; border: none"></iframe>
     <script>
       // Function to dynamically update the URL with viewport width
       let lastViewPortWidth = window.innerWidth;
@@ -79,17 +70,17 @@
         const loaderContainer = document.getElementById("loader-container");
         const baseURL = "https://www.paylease.com/registration/pay_portal/124506738/STD";
         // Detect screen width for mobile and innerWidth for desktop
-        let viewportWidth;
+        let viewportWidth = 768;
 
-        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          // Use screen.width for mobile devices
-          viewportWidth = 768;
-          console.log("Mobile Device Detected: Using screen.width");
-        } else {
-          console.log("Desktop Device Detected: Using window.innerWidth");
-          // Use window.innerWidth for desktops
-          viewportWidth = window.innerWidth;
-        }
+        // if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        //   // Use screen.width for mobile devices
+        //   viewportWidth = 768;
+        //   console.log("Mobile Device Detected: Using screen.width");
+        // } else {
+        //   console.log("Desktop Device Detected: Using window.innerWidth");
+        //   // Use window.innerWidth for desktops
+        //   viewportWidth = window.innerWidth;
+        // }
 
         if (viewportWidth < 1140 && viewportWidth > 768) {
           viewportWidth = 768;
