@@ -4,62 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dynamic VPW Update</title>
-    <style>
-      #header-loader {
-        font-family: Arial, sans-serif;
-        font-size: 1.2em;
-        color: #333;
-      }
-
-      /* Spinner styles */
-      #spinner {
-        position: fixed;
-        bottom: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        z-index: 9999;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: translate(-50%, -50%) rotate(0deg);
-        }
-
-        100% {
-          transform: translate(-50%, -50%) rotate(360deg);
-        }
-      }
-
-      /* Hide iframe initially */
-      iframe {
-        display: none;
-      }
-    </style>
   </head>
-
   <body>
-    <div
-      id="loader-container"
-      style="
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      "
-    >
-      <h1 id="header-loader">Hang tight — we’re getting the payment portal ready for you.</h1>
-      <!-- Spinner -->
-      <div id="spinner"></div>
-    </div>
-    <!-- iFrame -->
     <iframe
       id="dynamicIframe"
       src=""
@@ -68,57 +14,24 @@
       height="500"
       style="width: 100%; min-height: 100vh; height: 100%; margin: 0 auto; padding: 0; border: none"
     ></iframe>
+
     <script>
       // Function to dynamically update the URL with viewport width
       let lastViewPortWidth = window.innerWidth;
-
       function updateIframeURL() {
         const iframe = document.getElementById("dynamicIframe");
-        const spinner = document.getElementById("spinner");
-        const header = document.getElementById("header-loader");
-        const loaderContainer = document.getElementById("loader-container");
         const baseURL = "https://www.paylease.com/registration/pay_portal/124506738/STD";
-        // Detect screen width for mobile and innerWidth for desktop
-        let viewportWidth;
-
-        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          // Use screen.width for mobile devices
-          console.log("Mobile Device Detected: Using screen.width");
-
-          // Set the iframe's src attribute to the updated URL
-          iframe.src = `${baseURL}?vpw=768`;
-        } else {
-          console.log("Desktop Device Detected: Using window.innerWidth");
-          // Use window.innerWidth for desktops
+        let viewportWidth = window.innerWidth; // Get the current viewport width
+        if (viewportWidth < 1140 && viewportWidth > 768) {
+          viewportWidth = 768;
+          console.log(viewportWidth);
+        } else if (viewportWidth < 768) {
           viewportWidth = window.innerWidth;
-
-          if (viewportWidth < 1140 && viewportWidth > 768) {
-            viewportWidth = 768;
-            console.log(viewportWidth);
-          } else if (viewportWidth < 768) {
-            viewportWidth = window.innerWidth;
-          }
-
-          console.log("Viewport Width:", viewportWidth);
-          const urlWithVPW = `${baseURL}?vpw=${viewportWidth}`; // Append vpw to the URL
-
-          // Set the iframe's src attribute to the updated URL
-          iframe.src = urlWithVPW;
         }
+        const urlWithVPW = `${baseURL}?vpw=${viewportWidth}&crd=1`; // Append vpw to the URL
 
-        // Show spinner and hide iframe initially
-        spinner.style.display = "block";
-        header.style.display = "block";
-        iframe.style.display = "none";
-        loaderContainer.style.display = "flex"; // Ensure the loader container is displayed
-
-        // Add an event listener to hide the spinner once the iframe has loaded
-        iframe.onload = () => {
-          spinner.style.display = "none";
-          header.style.display = "none"; // Hide the header once the iframe is loaded
-          iframe.style.display = "block";
-          loaderContainer.style.display = "none"; // Hide the loader container
-        };
+        // Set the iframe's src attribute to the updated URL
+        iframe.src = urlWithVPW;
       }
 
       // Update the iframe URL on page load
