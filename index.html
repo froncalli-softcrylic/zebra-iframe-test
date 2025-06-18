@@ -83,33 +83,34 @@
 
         if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           // Use screen.width for mobile devices
-          viewportWidth = 768;
           console.log("Mobile Device Detected: Using screen.width");
+
+          // Set the iframe's src attribute to the updated URL
+          iframe.src = baseURL;
         } else {
           console.log("Desktop Device Detected: Using window.innerWidth");
           // Use window.innerWidth for desktops
           viewportWidth = window.innerWidth;
+
+          if (viewportWidth < 1140 && viewportWidth > 768) {
+            viewportWidth = 768;
+            console.log(viewportWidth);
+          } else if (viewportWidth < 768) {
+            viewportWidth = window.innerWidth;
+          }
+
+          console.log("Viewport Width:", viewportWidth);
+          const urlWithVPW = `${baseURL}?vpw=${viewportWidth}`; // Append vpw to the URL
+
+          // Set the iframe's src attribute to the updated URL
+          iframe.src = urlWithVPW;
         }
-
-        if (viewportWidth < 1140 && viewportWidth > 768) {
-          viewportWidth = 768;
-          console.log(viewportWidth);
-        } else if (viewportWidth < 768) {
-          viewportWidth = window.innerWidth;
-        }
-
-        console.log("Viewport Width:", viewportWidth);
-
-        const urlWithVPW = `${baseURL}?vpw=${viewportWidth}`; // Append vpw to the URL
 
         // Show spinner and hide iframe initially
         spinner.style.display = "block";
         header.style.display = "block";
         iframe.style.display = "none";
         loaderContainer.style.display = "flex"; // Ensure the loader container is displayed
-
-        // Set the iframe's src attribute to the updated URL
-        iframe.src = urlWithVPW;
 
         // Add an event listener to hide the spinner once the iframe has loaded
         iframe.onload = () => {
